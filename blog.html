@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Jake</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* === PAGE HEADER === */
+    .page-header {
+      padding: 5rem 0 3.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header-eyebrow {
+      font-size: var(--step--1);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: var(--serif);
+      font-size: var(--step-4);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .page-header .subtitle {
+      margin-top: 1.25rem;
+      color: var(--ink-muted);
+      max-width: 55ch;
+    }
+
+    /* === BLOG LAYOUT === */
+    .blog-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 5rem;
+      padding: 4rem 0;
+      align-items: start;
+    }
+
+    /* === POST LIST === */
+    .post-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .post-item {
+      padding: 2.25rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .post-item:first-child { border-top: 1px solid var(--rule); }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .post-date {
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+    }
+    .post-item h2 {
+      font-family: var(--serif);
+      font-size: var(--step-2);
+      line-height: 1.25;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+    .post-item h2 a {
+      color: var(--ink);
+      transition: color 0.15s;
+    }
+    .post-item h2 a:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .post-excerpt {
+      color: var(--ink-muted);
+      font-size: var(--step-0);
+      line-height: 1.65;
+      max-width: 62ch;
+      margin-bottom: 1rem;
+    }
+    .post-readmore {
+      font-size: var(--step--1);
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+    }
+    .post-readmore:hover { text-decoration: underline; }
+
+    /* Featured post */
+    .post-item--featured {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--accent);
+      padding: 2.25rem;
+      margin-bottom: 1rem;
+    }
+    .post-item--featured:first-child { border-top: 3px solid var(--accent); }
+
+    /* === SIDEBAR === */
+    .blog-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .sidebar-block h3 {
+      font-family: var(--serif);
+      font-size: var(--step-1);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Category list */
+    .category-list {
+      list-style: none;
+    }
+    .category-list li {
+      border-top: 1px solid var(--rule);
+    }
+    .category-list li:last-child { border-bottom: 1px solid var(--rule); }
+    .category-list a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      font-size: var(--step--1);
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .category-list a:hover { color: var(--accent); text-decoration: none; }
+    .category-count {
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      background: var(--rule);
+      padding: 0.15em 0.5em;
+      border-radius: 20px;
+    }
+
+    /* Newsletter / RSS */
+    .subscribe-block {
+      background: color-mix(in srgb, var(--accent) 7%, var(--bg));
+      border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--rule));
+      padding: 1.5rem;
+    }
+    .subscribe-block h3 {
+      font-family: var(--serif);
+      font-size: var(--step-1);
+      margin-bottom: 0.5rem;
+    }
+    .subscribe-block p {
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+      line-height: 1.55;
+    }
+    .subscribe-block a {
+      font-size: var(--step--1);
+      font-weight: 600;
+    }
+
+    /* Empty state */
+    .post-empty {
+      padding: 3rem 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .post-empty p {
+      color: var(--ink-muted);
+      font-size: var(--step--1);
+    }
+
+    @media (max-width: 900px) {
+      .blog-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .blog-sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" role="navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Jake</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="now.html">Now</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="page-header">
+      <div class="container">
+        <p class="page-header-eyebrow">Writing</p>
+        <h1>Blog &amp; Notes</h1>
+        <p class="subtitle">Thoughts on HCI, extended reality, research practice, and the occasional tangent. Longer pieces alongside short notes.</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="blog-layout">
+
+        <!-- POSTS -->
+        <div>
+          <!-- Featured / first post -->
+          <article class="post-item post-item--featured">
+            <div class="post-meta">
+              <span class="post-date">June 2025</span>
+              <span class="tag--warm tag">Featured</span>
+              <span class="tag">Research</span>
+            </div>
+            <h2><a href="#">What does an AR-First world actually look like?</a></h2>
+            <p class="post-excerpt">
+              After seven interviews with practising radiologists, I kept coming back to the same question: 
+              we talk about AR as though the technology is the starting point, when really the work — 
+              and the people doing it — should be. Here's what I've been thinking about.
+            </p>
+            <a href="#" class="post-readmore">Read more →</a>
+          </article>
+
+          <!-- Standard posts -->
+          <article class="post-item">
+            <div class="post-meta">
+              <span class="post-date">April 2025</span>
+              <span class="tag">Teaching</span>
+            </div>
+            <h2><a href="#">On explaining interaction design to people who've never heard of it</a></h2>
+            <p class="post-excerpt">
+              Teaching on the HCI module has made me realise how much jargon I'd internalised 
+              without noticing. Trying to explain affordances to a first-year is a good cure for that.
+            </p>
+            <a href="#" class="post-readmore">Read more →</a>
+          </article>
+
+          <article class="post-item">
+            <div class="post-meta">
+              <span class="post-date">February 2025</span>
+              <span class="tag">Methods</span>
+            </div>
+            <h2><a href="#">NASA-TLX isn't a magic number</a></h2>
+            <p class="post-excerpt">
+              Cognitive load measurement is useful, but treating a TLX score as the answer 
+              rather than one part of the picture leads to conclusions that feel authoritative 
+              but don't quite explain what was actually hard for people.
+            </p>
+            <a href="#" class="post-readmore">Read more →</a>
+          </article>
+
+          <article class="post-item">
+            <div class="post-meta">
+              <span class="post-date">November 2024</span>
+              <span class="tag">AR / XR</span>
+            </div>
+            <h2><a href="#">First impressions: Meta Quest 3 in a research context</a></h2>
+            <p class="post-excerpt">
+              Notes from using the Quest 3 alongside HoloLens 2 in a research setting. 
+              Different tradeoffs than I expected — the passthrough quality changes what 
+              feels possible, but some things are still conspicuously missing.
+            </p>
+            <a href="#" class="post-readmore">Read more →</a>
+          </article>
+
+          <!-- Placeholder for when there are no more posts -->
+          <!-- 
+          <div class="post-empty">
+            <p>More posts coming soon.</p>
+          </div>
+          -->
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside class="blog-sidebar">
+
+          <div class="subscribe-block">
+            <h3>Stay in the loop</h3>
+            <p>New posts are infrequent but deliberate. Subscribe via RSS or check back when you like.</p>
+            <a href="feed.xml">RSS feed →</a>
+          </div>
+
+          <div class="sidebar-block">
+            <h3>Topics</h3>
+            <ul class="category-list">
+              <li>
+                <a href="#">Research <span class="category-count">3</span></a>
+              </li>
+              <li>
+                <a href="#">AR / XR <span class="category-count">2</span></a>
+              </li>
+              <li>
+                <a href="#">Teaching <span class="category-count">1</span></a>
+              </li>
+              <li>
+                <a href="#">Methods <span class="category-count">1</span></a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sidebar-block">
+            <h3>Elsewhere</h3>
+            <ul class="category-list">
+              <li><a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a></li>
+              <li><a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a></li>
+              <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="now.html">Now page</a></li>
+            </ul>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <span>© 2025 Jake · Newcastle University</span>
+      <div class="footer-links">
+        <a href="now.html">Now</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

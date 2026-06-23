@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Now — Jake</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    /* === PAGE HEADER === */
+    .page-header {
+      padding: 5rem 0 3.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .page-header-eyebrow {
+      font-size: var(--step--1);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: var(--serif);
+      font-size: var(--step-4);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      max-width: 20ch;
+    }
+    .page-header .subtitle {
+      margin-top: 1.25rem;
+      color: var(--ink-muted);
+      max-width: 55ch;
+    }
+
+    /* === NOW LAYOUT === */
+    .now-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 5rem;
+      padding: 5rem 0;
+      align-items: start;
+    }
+
+    /* === BIO === */
+    .bio-section h2 {
+      font-family: var(--serif);
+      font-size: var(--step-2);
+      margin-bottom: 1.25rem;
+    }
+    .bio-section p {
+      color: var(--ink-muted);
+      margin-bottom: 1.25rem;
+      max-width: 60ch;
+    }
+    .bio-section p:last-of-type { margin-bottom: 0; }
+
+    /* === NOW ITEMS === */
+    .now-items {
+      margin-top: 3.5rem;
+    }
+    .now-items h2 {
+      font-family: var(--serif);
+      font-size: var(--step-2);
+      margin-bottom: 2rem;
+    }
+    .now-item {
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 1.5rem;
+    }
+    .now-item:last-child { border-bottom: 1px solid var(--rule); }
+    .now-item-label {
+      font-size: var(--step--1);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 0.15em;
+    }
+    .now-item-content h4 {
+      font-family: var(--serif);
+      font-size: var(--step-1);
+      margin-bottom: 0.35rem;
+    }
+    .now-item-content p {
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    /* === SIDEBAR === */
+    .now-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+    }
+
+    /* === PHOTO === */
+    .photo-block {
+      margin-bottom: 2.5rem;
+    }
+    .photo-frame {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background: var(--rule);
+      overflow: hidden;
+      position: relative;
+    }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.75rem;
+      color: var(--ink-muted);
+      font-size: var(--step--1);
+      background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+    }
+    .photo-placeholder svg { width: 40px; height: 40px; opacity: 0.4; }
+    .photo-caption {
+      margin-top: 0.75rem;
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      font-style: italic;
+    }
+
+    /* === LINKS === */
+    .links-block h3 {
+      font-family: var(--serif);
+      font-size: var(--step-1);
+      margin-bottom: 1.25rem;
+    }
+    .links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .links-list li {
+      border-top: 1px solid var(--rule);
+    }
+    .links-list li:last-child { border-bottom: 1px solid var(--rule); }
+    .links-list a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 0;
+      font-size: var(--step--1);
+      font-weight: 500;
+      color: var(--ink);
+      transition: color 0.15s;
+    }
+    .links-list a:hover { color: var(--accent); text-decoration: none; }
+    .links-list a svg { width: 14px; height: 14px; opacity: 0.4; flex-shrink: 0; }
+
+    /* === NOW PAGE META === */
+    .now-meta {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: color-mix(in srgb, var(--accent-warm) 8%, var(--bg));
+      border-left: 3px solid var(--accent-warm);
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+    }
+    .now-meta a { font-size: inherit; }
+
+    @media (max-width: 900px) {
+      .now-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .now-sidebar { position: static; }
+      .photo-frame { aspect-ratio: 3 / 2; max-width: 400px; }
+    }
+    @media (max-width: 640px) {
+      .now-item { grid-template-columns: 1fr; gap: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav" role="navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Jake</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="now.html" class="active">Now</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="page-header">
+      <div class="container">
+        <p class="page-header-eyebrow">A now page</p>
+        <h1>What I'm doing<br>at the moment</h1>
+        <p class="subtitle">
+          A <a href="https://nownownow.com/about" target="_blank" rel="noopener">now page</a> is a snapshot: where I am, what I'm working on, and what's occupying my mind right now.
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="now-layout">
+
+        <!-- LEFT: Bio + Now items -->
+        <div>
+          <section class="bio-section">
+            <h2>About me</h2>
+            <p>
+              I'm a researcher and teaching assistant at Newcastle University, working at the intersection 
+              of human-computer interaction, interaction design, and extended reality. My research focuses 
+              on how clinicians — particularly radiologists — can work with augmented reality systems in 
+              ways that genuinely fit their practice, not just their workflows on paper.
+            </p>
+            <p>
+              I'm interested in the gap between what technology promises and what it actually does for 
+              people under real conditions. That interest runs through my research methods too: I prefer 
+              talking to people, watching them work, and taking seriously what they say.
+            </p>
+            <p>
+              Outside of research, I teach on the undergraduate HCI and Interaction Design module, 
+              which I enjoy more than I probably admit. Thinking about how to explain things well 
+              keeps me honest about whether I actually understand them.
+            </p>
+          </section>
+
+          <section class="now-items">
+            <h2>Right now</h2>
+            <div class="now-item">
+              <span class="now-item-label">Writing</span>
+              <div class="now-item-content">
+                <h4>AR in Radiology — Paper submission</h4>
+                <p>Finalising a paper on AR interactions in radiology for <em>Virtual Worlds</em> (MDPI). Seven interviews with practising radiologists and registrars, analysed through reflexive thematic analysis and NASA-TLX. Framing the findings around an "AR-First world" concept.</p>
+              </div>
+            </div>
+            <div class="now-item">
+              <span class="now-item-label">Teaching</span>
+              <div class="now-item-content">
+                <h4>HCI &amp; Interaction Design</h4>
+                <p>Teaching assistant on the undergraduate module at Newcastle University, supporting students through interaction design projects and studio crits.</p>
+              </div>
+            </div>
+            <div class="now-item">
+              <span class="now-item-label">Research</span>
+              <div class="now-item-content">
+                <h4>Extended reality in clinical contexts</h4>
+                <p>Continuing to explore how XR devices — HoloLens 2, Meta Quest 3 — fit (or don't) into radiology workflows. Interested in developing better evaluation frameworks for AR in practice.</p>
+              </div>
+            </div>
+            <div class="now-item">
+              <span class="now-item-label">Reading</span>
+              <div class="now-item-content">
+                <h4>Add what you're reading here</h4>
+                <p>Update this with whatever you're currently reading — papers, books, anything.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT: Photo + Links -->
+        <aside class="now-sidebar">
+          <div class="photo-block">
+            <div class="photo-frame">
+              <!-- Replace src with your actual photo path, e.g. src="assets/photo.jpg" -->
+              <!-- <img src="assets/photo.jpg" alt="Jake"> -->
+              <div class="photo-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+                  <path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                </svg>
+                <span>Add your photo here</span>
+              </div>
+            </div>
+            <p class="photo-caption">Newcastle upon Tyne · Updated June 2025</p>
+          </div>
+
+          <div class="links-block">
+            <h3>Find me elsewhere</h3>
+            <ul class="links-list">
+              <li>
+                <a href="https://orcid.org/" target="_blank" rel="noopener">
+                  ORCID
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://scholar.google.com/" target="_blank" rel="noopener">
+                  Google Scholar
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/" target="_blank" rel="noopener">
+                  GitHub
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://linkedin.com/" target="_blank" rel="noopener">
+                  LinkedIn
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:your@email.ac.uk">
+                  Email
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="now-meta">
+            This is a <a href="https://nownownow.com/about" target="_blank" rel="noopener">now page</a> — 
+            a simple, human way to say what you're currently focused on. Last updated: June 2025.
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <span>© 2025 Jake · Newcastle University</span>
+      <div class="footer-links">
+        <a href="now.html">Now</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
